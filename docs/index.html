@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shershen — Трекер особистого прогресу</title>
+  <meta name="description" content="Shershen — мобільний додаток для відстеження особистого прогресу. Залишіть email, щоб отримати запрошення до TestFlight першими." />
+  <meta property="og:title" content="Shershen — Трекер особистого прогресу" />
+  <meta property="og:description" content="Зареєструйтеся першими й отримайте доступ до бета-версії iOS-додатку." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo" aria-label="Shershen">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Shershen logo">
+          <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
+          <path d="M8 20 L14 12 L18 17 L22 10" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="22" cy="10" r="2.5" fill="white"/>
+        </svg>
+        <span class="logo-text">Shershen</span>
+      </div>
+      <button class="theme-toggle" data-theme-toggle aria-label="Перемкнути тему">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Скоро в TestFlight
+        </div>
+        <h1 class="hero-title">Відстежуй свій<br/><span class="accent">особистий прогрес</span></h1>
+        <p class="hero-sub">Shershen — iOS-додаток, який допомагає вимірювати ріст у всіх сферах життя: звички, цілі, навички. Просто і чесно.</p>
+
+        <!-- EMAIL FORM -->
+        <form class="signup-form" id="signup-form" action="https://api.github.com" data-form="waitlist">
+          <div class="form-group">
+            <input
+              type="email"
+              id="email-input"
+              name="email"
+              placeholder="your@email.com"
+              required
+              autocomplete="email"
+              aria-label="Email-адреса"
+            />
+            <button type="submit" class="btn-primary" id="submit-btn">
+              <span class="btn-text">Отримати доступ</span>
+              <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          <p class="form-hint">Без спаму. Тільки запрошення TestFlight.</p>
+        </form>
+
+        <!-- SUCCESS STATE -->
+        <div class="success-state" id="success-state" hidden>
+          <div class="success-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </div>
+          <p class="success-text">Готово! Надішлемо запрошення одразу після виходу бета-версії.</p>
+        </div>
+
+        <p class="counter" id="counter">Вже чекають: <strong id="counter-num">—</strong></p>
+      </div>
+
+      <!-- Background decoration -->
+      <div class="hero-bg" aria-hidden="true">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+      <div class="container">
+        <h2 class="section-title">Що всередині</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+            </div>
+            <h3>Динаміка прогресу</h3>
+            <p>Графіки, які показують реальний рух. Не просто streak — а справжня динаміка змін.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h3>Звички та цілі</h3>
+            <p>Щоденні звички й довгострокові цілі в одному місці. Без зайвих налаштувань.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+            </div>
+            <h3>Особистий щоденник</h3>
+            <p>Занотовуй рефлексії, позначай настрій, відстежуй, що працює, а що ні.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+            </div>
+            <h3>Native iOS</h3>
+            <p>Побудований для iPhone. Швидкий, нативний, без зайвого. Скоро на Android.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BOTTOM -->
+    <section class="cta-bottom">
+      <div class="container cta-inner">
+        <h2>Готовий спробувати першим?</h2>
+        <p>Залиш email — надішлемо TestFlight-запрошення одразу після виходу збірки.</p>
+        <a href="#signup-form" class="btn-primary" onclick="document.getElementById('email-input').focus()">
+          Записатися у чергу
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
+          <path d="M8 20 L14 12 L18 17 L22 10" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <circle cx="22" cy="10" r="2.5" fill="white"/>
+        </svg>
+        <span class="logo-text">Shershen</span>
+      </div>
+      <p class="footer-text">© 2026 Shershen. Всі права захищені.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
