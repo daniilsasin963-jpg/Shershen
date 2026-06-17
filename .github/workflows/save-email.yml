@@ -1,0 +1,68 @@
+name: Save Waitlist Email
+
+# Triggered by repository_dispatch event from the landing page
+on:
+  repository_dispatch:
+    types: [new_waitlist_signup]
+
+jobs:
+  save-email:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.WAITLIST_TOKEN }}
+
+      - name: Validate email input
+        id: validate
+        run: |
+          EMAIL="${{ github.event.client_payload.email }}"
+          # Basic email validation
+          if [[ "$EMAIL" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+            echo "valid=true" >> $GITHUB_OUTPUT
+            echo "email=$EMAIL" >> $GITHUB_OUTPUT
+          else
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "Invalid email received: $EMAIL"
+            exit 1
+          fi
+
+      - name: Check for duplicate email
+        id: check_dup
+        run: |
+          EMAIL="${{ steps.validate.outputs.email }}"
+          # Create file if it doesn't exist
+          touch waitlist.txt
+          
+          if grep -qiF "$EMAIL" waitlist.txt; then
+            echo "duplicate=true" >> $GITHUB_OUTPUT
+            echo "Email already in waitlist: $EMAIL"
+          else
+            echo "duplicate=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Append email to waitlist
+        if: steps.check_dup.outputs.duplicate == 'false'
+        run: |
+          EMAIL="${{ steps.validate.outputs.email }}"
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "${EMAIL} | ${TIMESTAMP}" >> waitlist.txt
+          echo "Added: $EMAIL at $TIMESTAMP"
+
+      - name: Commit and push waitlist update
+        if: steps.check_dup.outputs.duplicate == 'false'
+        run: |
+          git config user.name  "Shershen Bot"
+          git config user.email "actions@github.com"
+          git add waitlist.txt
+          git commit -m "waitlist: add new signup [skip ci]"
+          git push
+
+      - name: Log result
+        run: |
+          TOTAL=$(wc -l < waitlist.txt)
+          echo "Total waitlist signups: $TOTAL"
