@@ -19,28 +19,35 @@ workflows:
       - name: Install Node dependencies
         script: |
           npm install --legacy-peer-deps
-      - name: Build web assets
+
+      - name: Build web assets (Vite → dist/public)
         script: |
-          npm run build
-      - name: Capacitor copy iOS
+          npx vite build
+
+      - name: Capacitor sync iOS
         script: |
-          npx cap copy ios
+          npx cap sync ios
+
       - name: Install CocoaPods
         script: |
           cd ios/App
           pod install
+
       - name: Set up code signing
         script: |
           xcode-project use-profiles
-      - name: Build iOS
+
+      - name: Build iOS IPA
         script: |
           xcode-project build-ipa \
             --project "$XCODE_PROJECT" \
             --scheme "$XCODE_SCHEME"
+
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+
     publishing:
       app_store_connect:
         auth: integration
